@@ -1,0 +1,72 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model DigitalLiteracyProgram {
+  id             Int      @id @default(autoincrement())
+  programName    String
+  participants   Int
+  completionRate Float
+  startDate      DateTime
+  endDate        DateTime
+  community      String
+}
+
+model BroadbandConnectivity {
+  id            Int      @id @default(autoincrement())
+  region        String
+  coverageLevel String
+  speed         Int
+  lastUpdated   DateTime
+}
+
+model DeviceAccess {
+  id          Int      @id @default(autoincrement())
+  community   String
+  deviceType  String
+  availability Boolean
+  affordabilityIndex Float
+}
+
+model CommunityFeedback {
+  id           Int      @id @default(autoincrement())
+  community    String
+  feedback     String
+  submittedAt  DateTime @default(now())
+}
+
+model GeographicalData {
+  id           Int      @id @default(autoincrement())
+  region       String
+  latitude     Float
+  longitude    Float
+  areaType     String  // e.g., "County", "State", "Island"
+}
+
+model DigitalEquityAsset {
+  id                    Int      @id @default(autoincrement())
+  geographicArea       String   @map("geographic_area")
+  assetName           String   @map("asset_name")
+  typeOfEntity        String   @map("type_of_entity")
+  digitalEquityPillars String   @map("digital_equity_pillars")
+  cp1                 Boolean  @default(false)
+  cp2                 Boolean  @default(false)
+  cp3                 Boolean  @default(false)
+  cp4                 Boolean  @default(false)
+  cp5                 Boolean  @default(false)
+  cp6                 Boolean  @default(false)
+  cp7                 Boolean  @default(false)
+  cp8                 Boolean  @default(false)
+  cp9                 Boolean  @default(false)
+  descriptionOfServices String? @map("description_of_services")
+  website             String?
+  streetAddress       String?  @map("street_address")
+  createdAt           DateTime @default(now()) @map("created_at")
+
+  @@map("digital_equity_assets")
+}
